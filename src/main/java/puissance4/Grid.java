@@ -38,6 +38,25 @@ public class Grid {
     }
 
     public void clear() {
-        columns.stream().forEach(column -> column.clear());
+        columns.stream().forEach(Column::clear);
+    }
+
+    public String render() {
+        StringBuilder renderBuf = new StringBuilder();
+
+        for (int row = getRowsCount() - 1; row >= 0; row--) {
+            for (int column = 0; column < getColumnsCount(); column++) {
+                if (getCellState(column, row).equals(Coin.YELLOW))
+                    renderBuf.append(" Y");
+                else if (getCellState(column, row).equals(Coin.RED))
+                    renderBuf.append(" R");
+                else
+                    renderBuf.append(" .");
+            }
+            renderBuf.append(" \n");
+
+        }
+
+        return renderBuf.toString();
     }
 }

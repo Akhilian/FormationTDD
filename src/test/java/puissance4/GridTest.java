@@ -60,4 +60,69 @@ public class GridTest {
             assertThat(grid.columns.get(columnIndex).getFreeSpaces()).isEqualTo(Column.ROWS_COUNT);
         }
     }
+
+    @Test
+    public void render_shouldRender_whenGridIsEmpty() {
+        String view = grid.render();
+
+        assertThat(view).isEqualTo(
+                " . . . . . . . \n" +
+                " . . . . . . . \n" +
+                " . . . . . . . \n" +
+                " . . . . . . . \n" +
+                " . . . . . . . \n" +
+                " . . . . . . . \n"
+        );
+    }
+
+    @Test
+    public void render_shouldRender_whenGridContainsAYellowCoin() throws ColumnFullException {
+        grid.addCoin(2, Coin.YELLOW);
+
+        String view = grid.render();
+
+        assertThat(view).isEqualTo(
+                " . . . . . . . \n" +
+                " . . . . . . . \n" +
+                " . . . . . . . \n" +
+                " . . . . . . . \n" +
+                " . . . . . . . \n" +
+                " . . Y . . . . \n"
+        );
+    }
+
+    @Test
+    public void render_shouldRender_whenGridContainsARedCoin() throws ColumnFullException {
+        grid.addCoin(4, Coin.RED);
+
+        String view = grid.render();
+
+        assertThat(view).isEqualTo(
+                " . . . . . . . \n" +
+                " . . . . . . . \n" +
+                " . . . . . . . \n" +
+                " . . . . . . . \n" +
+                " . . . . . . . \n" +
+                " . . . . R . . \n"
+        );
+    }
+
+    @Test
+    public void render_shouldRender_whenGridContainsMultipleCoins() throws ColumnFullException {
+        grid.addCoin(4, Coin.YELLOW);
+        grid.addCoin(3, Coin.RED);
+        grid.addCoin(4, Coin.YELLOW);
+        grid.addCoin(4, Coin.RED);
+
+        String view = grid.render();
+
+        assertThat(view).isEqualTo(
+                " . . . . . . . \n" +
+                " . . . . . . . \n" +
+                " . . . . . . . \n" +
+                " . . . . R . . \n" +
+                " . . . . Y . . \n" +
+                " . . . R Y . . \n"
+        );
+    }
 }
