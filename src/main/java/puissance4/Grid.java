@@ -6,7 +6,6 @@ import java.util.List;
 public class Grid {
 
     public static final int COLUMNS_COUNT = 7;
-    public static final String EMPTY_STATE = "EMPTY";
 
     List<Column> columns;
 
@@ -27,8 +26,7 @@ public class Grid {
     }
 
     public String getCellState(int column, int row) {
-        return EMPTY_STATE;
-        /*return columns.get(column).getAt(row);*/
+        return this.columns.get(column).getState(row);
     }
 
     public void addCoin(int column, String color) throws ColumnFullException {

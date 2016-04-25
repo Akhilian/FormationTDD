@@ -7,7 +7,7 @@ class Column {
 
     static final int ROWS_COUNT = 6;
 
-    private static final String EMPTY_CELL = "EMPTY";
+    public static final String EMPTY_CELL = "EMPTY";
 
     private List<Coin> coins = null;
 
@@ -32,9 +32,9 @@ class Column {
     }
 
     String getState(int cellIndex) {
-        if(coins.get(cellIndex) != null) {
+        try {
             return coins.get(cellIndex).getColor();
-        } else {
+        } catch (IndexOutOfBoundsException e) {
             return EMPTY_CELL;
         }
     }

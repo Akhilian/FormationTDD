@@ -1,39 +1,46 @@
 package puissance4;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class GridTest {
 
-    @Test
-    public void new_shouldHave7Columns() throws Exception {
-        Grid grid = new Grid();
+    Grid grid;
 
+    @Before
+    public void setUp() throws Exception {
+        grid = new Grid();
+    }
+
+    @Test
+    public void new_shouldHave7Columns() {
         assertThat(grid.getColumnsCount()).isEqualTo(7);
     }
 
     @Test
-    public void new_shouldHave6Rows() throws Exception {
-        Grid grid = new Grid();
-
+    public void new_shouldHave6Rows() {
         assertThat(grid.getRowsCount()).isEqualTo(Column.ROWS_COUNT);
     }
 
     @Test
-    public void getCellState_shouldReturnEMPTY() throws Exception {
-        Grid grid = new Grid();
-
-        assertThat(grid.getCellState(0, 0)).isEqualTo(Grid.EMPTY_STATE);
+    public void getCellState_shouldReturnEMPTY() {
+        assertThat(grid.getCellState(0, 0)).isEqualTo(Column.EMPTY_CELL);
     }
 
+    @Test
+    public void getCellState_shouldReturnExpectedColor() throws ColumnFullException {
+        grid.addCoin(2, Coin.YELLOW);
+        grid.addCoin(2, Coin.RED);
 
+        assertThat(grid.getCellState(2, 0)).isEqualTo(Coin.YELLOW);
+        assertThat(grid.getCellState(2, 1)).isEqualTo(Coin.RED);
+    }
 
     @Test
     public void addCoin_shouldModifyExpectedColumnState() throws  ColumnFullException {
         int columnIndex = 0;
-        Grid grid = new Grid();
-
         grid.addCoin(columnIndex, Coin.RED);
 
         assertThat(grid.getColumnFreeSpace(columnIndex)).isEqualTo(5);
@@ -41,10 +48,10 @@ public class GridTest {
 
     @Test
     public void clear_shouldReturnEmptyGrid() throws  ColumnFullException {
-        Grid grid = new Grid();
-
         for (int columnIndex = 0; columnIndex < Grid.COLUMNS_COUNT; columnIndex++) {
-            grid.addCoin(columnIndex, Coin.RED);
+            for (int row = 0; row < Column.ROWS_COUNT; row++) {
+                grid.addCoin(columnIndex, Coin.RED);
+            }
         }
 
         grid.clear();
