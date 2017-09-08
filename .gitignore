@@ -62,3 +62,6 @@ application/test.xlsx
 **/pom.xml.versionsBackup
 spwebapp.sublime-workspace
 **/.sass-cache
+
+node_modules/
+.DS_Store
